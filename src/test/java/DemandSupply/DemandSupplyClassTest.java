@@ -24,20 +24,26 @@ class DemandSupplyClassTest {
 
 
         LocalDateTime timeNow = LocalDateTime.now();
-        ItemModel s1 = new ItemModel(1, "tomato",24, timeNow.minusHours(1), 100);
+        ItemModel s1 = new ItemModel(1, "tomato",24, timeNow.minusHours(3), 100);
         ItemModel s2 = new ItemModel(2, "tomato",20, timeNow.minusHours(2), 90);
-        ItemModel d1 = new ItemModel(1, "tomato",22, timeNow.minusHours(1), 110);
+        ItemModel d1 = new ItemModel(1, "tomato",22, timeNow.minusHours(3), 110);
         ItemModel d2 = new ItemModel(2, "tomato",21, timeNow.minusHours(2), 10);
-        ItemModel d3 = new ItemModel(3, "tomato",21, timeNow.minusHours(3), 40);
-        ItemModel s3 = new ItemModel(3, "tomato",19, timeNow.minusHours(3), 50);
+        ItemModel d3 = new ItemModel(3, "tomato",21, timeNow.minusHours(1), 40);
+        ItemModel s3 = new ItemModel(3, "tomato",19, timeNow.minusHours(1), 50);
 
         pqSupply.add(s1);
-        pqSupply.add(s2);
-        pqSupply.add(s3);
-        pqDemand.add(d1);
-        pqDemand.add(d2);
-        pqDemand.add(d3);
-
         DemandSupplyClass.trade(pqSupply, pqDemand);
+        pqSupply.add(s2);
+        DemandSupplyClass.trade(pqSupply, pqDemand);
+        pqDemand.add(d1);
+        DemandSupplyClass.trade(pqSupply, pqDemand);
+        pqDemand.add(d2);
+        DemandSupplyClass.trade(pqSupply, pqDemand);
+        pqSupply.add(s3);
+        DemandSupplyClass.trade(pqSupply, pqDemand);
+        pqDemand.add(d3);
+        DemandSupplyClass.trade(pqSupply, pqDemand);
+
+
     }
 }

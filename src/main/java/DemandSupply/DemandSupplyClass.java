@@ -12,9 +12,8 @@ public class DemandSupplyClass {
 
         while (!pqSupply.isEmpty() && !pqDemand.isEmpty()) {
             ItemModel sold = pqSupply.peek();
-            System.out.println("Seller price -> " + sold.getPrice());
             ItemModel bought = pqDemand.peek();
-            if(sold.getPrice() < bought.getPrice() && sold.getTimestamp().isBefore(bought.getTimestamp())) {
+            if(sold.getPrice() < bought.getPrice()) {
                 // trade happens for quantity ->
                 Integer quantity = Math.min(sold.getQuantity(), bought.getQuantity());
                 bought.setQuantity(bought.getQuantity() - quantity);
@@ -32,7 +31,6 @@ public class DemandSupplyClass {
                 }
 
                 if(queue == null || queue.isEmpty()) {
-                    System.out.println("Everything is too costly");
                     return "Everything is too costly";
                 }
 
@@ -46,36 +44,25 @@ public class DemandSupplyClass {
                 System.out.println(
                         "d" + bought2.getId() + " " + "s" + sold2.getId() + " " + sold2.getPrice() + "/kg" + " "
                                 + quantity + "kg");
-
-                while(!queue.isEmpty()) {
-                    pqSupply.add(queue.remove());
-                }
             }
 
             // update the quantities accordingly
             if(sold.getQuantity() == 0) {
                 pqSupply.remove();
-                System.out.println("Sold");
             } else {
                 pqSupply.peek().setQuantity(sold.getQuantity());
-                System.out.println("Supply -> " +pqSupply.peek().getQuantity());
             }
 
             if(bought.getQuantity() == 0) {
                 pqDemand.remove();
-                System.out.println("Bought");
             } else {
                 pqDemand.peek().setQuantity(bought.getQuantity());
-                System.out.println("Demand -> " + pqDemand.peek().getQuantity());
             }
         }
         return "Trade completed";
     }
 
     static class SellerComparator implements Comparator<ItemModel> {
-
-        // Overriding compare()method of Comparator
-        // for descending order of cgpa
         public int compare(ItemModel item1, ItemModel item2) {
             if (item1.getPrice() < item2.getPrice())
                 return -1;
@@ -88,9 +75,6 @@ public class DemandSupplyClass {
     }
 
     static class BuyerComparator implements Comparator<ItemModel> {
-
-        // Overriding compare()method of Comparator
-        // for descending order of cgpa
         public int compare(ItemModel item1, ItemModel item2) {
             if (item1.getPrice() < item2.getPrice())
                 return 1;
