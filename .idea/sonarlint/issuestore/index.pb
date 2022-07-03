@@ -20,3 +20,5 @@ a
 1src/main/java/com/project/employee/ErrorBody.java,6\e\6ec165f22ff06b2be22dd278188f552092a5ff8f
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
