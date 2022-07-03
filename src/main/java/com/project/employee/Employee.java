@@ -4,7 +4,6 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
@@ -14,19 +13,26 @@ import java.util.HashMap;
 @Table(name = "Employees")
 @NoArgsConstructor
 public class Employee {
-	private String employeeId;
 	@Id
-	@GeneratedValue
-	private int id;
+	private int userId;
 	@NonNull
 	private java.lang.String name;
 	@NonNull
 	private java.lang.String email;
 	@NonNull
 	private java.lang.String mobile;
+	private String employeeId;
 	private HashMap<String, Integer> skills;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
 	public LocalDateTime getUpdatedAt() {
 		return updatedAt;

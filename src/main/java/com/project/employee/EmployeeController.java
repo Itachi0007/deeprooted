@@ -113,7 +113,7 @@ public class EmployeeController {
 			return new ResponseEntity(et, HttpStatus.CREATED);
 		} catch (Exception e) {
 			System.out.println("Something went wrong.");
-			return new ResponseEntity(e, HttpStatus.NOT_FOUND);
+			return new ResponseEntity(e, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -160,11 +160,13 @@ public class EmployeeController {
 			}
 
 			existEmployee.setUpdatedAt(LocalDateTime.now());
-			log.info("Employee updated successfully: {}", existEmployee);
+			existEmployee.setUserId(employee.getUserId());
+			log.info("Employee updated successfully");
+			repo.deleteByUserId(employee.getUserId());
 			repo.save(existEmployee);
 			return new ResponseEntity<>("Employee updated successfully", HttpStatus.OK);
 		} catch (NoSuchElementException e) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

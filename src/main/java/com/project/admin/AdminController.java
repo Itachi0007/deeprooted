@@ -31,7 +31,7 @@ public class AdminController {
 	// search employees
 	@GetMapping(path = "/{field}/{value}")
 	public ResponseEntity find(@PathVariable String field, @PathVariable String value) {
-		if(field == "name") {
+		if(field.matches("name")) {
 			List<Employee> employees = repo.findByName(value);
 			if (employees.size() <= 0) {
 				log.info("No employees found");
@@ -43,7 +43,7 @@ public class AdminController {
 
 			return new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
 		}
-		else if(field =="id") {
+		else if(field.matches("employeeId")) {
 			Employee employee = repo.findByEmployeeId(value).orElse(null);
 			if (employee == null) {
 				log.info("No employees found");
@@ -55,7 +55,19 @@ public class AdminController {
 
 			log.info("Employee fetched successfully");
 			return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+		} else if(field.matches("skill")) {
+			List<Employee> employees = repo.findSkilled(value);
+			if (employees.isEmpty()) {
+				log.info("No employees found");
+				ErrorBody body = new ErrorBody();
+				body.setStatusCode(HttpStatus.NOT_FOUND);
+				body.setMessage("No employees found");
+				return new ResponseEntity<ErrorBody>(body, HttpStatus.NOT_FOUND);
+			}
+
+			log.info("Employee fetched successfully");
+			return new ResponseEntity<List<Employee>>(employees, HttpStatus.OK);
 		}
-		return new ResponseEntity<>("Invalid search criteria", HttpStatus.OK);
+		else return new ResponseEntity<>("Invalid search criteria", HttpStatus.BAD_REQUEST);
 	}
 }
